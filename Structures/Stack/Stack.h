@@ -6,44 +6,50 @@
 #define UNTITLED_STACK_H
 
 
-class Stack
-{
+class Stack {
 private:
     int *num;
     int top;
+
+    bool isFull() {
+        if (top == 9999999)
+            return true;
+        else
+            return false;
+    }
+
+    bool isEmpty() {
+        if (top == -1)
+            return true;
+        else
+            return false;
+    }
+
 public:
     Stack();
+
     ~Stack();
-    int push(int n){
-        if(isFull()){
+
+    int push(int n) {
+        if (isFull()) {
             return 0;
         }
         ++top;
-        num[top]=n;
+        num[top] = n;
         return n;
     }
-    int pop(){
+
+    int pop() {
         int temp;
-        if(isEmpty())
+        if (isEmpty())
             return 0;
-        temp=num[top];
+        temp = num[top];
         --top;
         return temp;
     }
-    int isEmpty(){
-        if(top==-1)
-            return 1;
-        else
-            return 0;
-    }
-    int isFull(){
-        if(top==(9999999))
-            return 1;
-        else
-            return 0;
-    }
-    int peek(){
-        if(isEmpty())
+
+    int peek() {
+        if (isEmpty())
             return 0;
         return num[top];
     }

@@ -6,35 +6,46 @@
 #define UNTITLED_LIST_H
 
 
-
-class List
-{
+class List {
 private:
-    typedef struct Node
-    {
+    typedef struct Node {
         int data;
         Node *nextNode;
-    } * node_ptr;
+    } *node_ptr;
 
     node_ptr head;
 
     size_t sz;
 
-    void incrementSize(){
+    void incrementSize() {
         this->sz++;
     }
-    void decrementSize(){
+
+    void decrementSize() {
         this->sz--;
     }
 
+    bool isEmpty() {
+        return this->head == nullptr;
+    };
+
+    void emptyList() {
+        node_ptr currentNodePtr;
+        while (this->head != nullptr) {
+            currentNodePtr = this->head;
+            this->head = this->head->nextNode;
+            delete currentNodePtr;
+        }
+        this->sz = 0;
+    };
 public:
     List();
-    bool find(int data);
-    void add(int data);
-    bool remove(int data);
-    bool isEmpty();
 
-    void emptyList();
+    bool find(int data);
+
+    void add(int data);
+
+    bool remove(int data);
 
     size_t size();
 

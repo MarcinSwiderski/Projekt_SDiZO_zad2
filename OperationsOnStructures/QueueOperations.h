@@ -5,7 +5,7 @@
 #ifndef UNTITLED_QUEUEOPERATIONS_H
 #define UNTITLED_QUEUEOPERATIONS_H
 #include "Structures/Queue/Queue.h"
-
+using namespace std::chrono;
 
 Queue *createQueue(unsigned int capacity) {
     Queue *queue = new Queue();
@@ -59,9 +59,8 @@ int rear(Queue *queue) {
     return queue->array[queue->rear];
 }
 
+void queue_create_operation(int size_of_queue, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
 
-void queue_create_operation(int size_of_queue, int number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
-    using namespace std::chrono;
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
     for (int repeat = 0; repeat < number_of_repeats; repeat++) {
         Queue *test_queue = createQueue(size_of_queue);
@@ -71,12 +70,11 @@ void queue_create_operation(int size_of_queue, int number_of_repeats,vector<int>
     }
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t_end - t_start);
-    Result queue_create_result = Result("queue", "create", size_of_queue, time_span.count(), number_of_repeats);
+    ResultByRow queue_create_result = ResultByRow("queue", "create", size_of_queue, time_span.count());
     results_parser.push_back(queue_create_result.toString());
 }
 
-void queue_search_operation(int size_of_queue, int number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
-    using namespace std::chrono;
+void queue_search_operation(int size_of_queue, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
     srand(time(NULL));
@@ -110,12 +108,11 @@ void queue_search_operation(int size_of_queue, int number_of_repeats,vector<int>
         t_end = high_resolution_clock::now();
         time_span += duration_cast<duration<double>>(t_end - t_start);
     }
-    Result queue_search_result = Result("queue", "search", size_of_queue, time_span.count(), number_of_repeats);
+    ResultByRow queue_search_result = ResultByRow("queue", "search", size_of_queue, time_span.count());
     results_parser.push_back(queue_search_result.toString());
 }
 
-void queue_enqueue_operation(int size_of_queue, int number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
-    using namespace std::chrono;
+void queue_enqueue_operation(int size_of_queue, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
     srand(time(NULL));
@@ -131,12 +128,11 @@ void queue_enqueue_operation(int size_of_queue, int number_of_repeats,vector<int
         t_end = high_resolution_clock::now();
         time_span += duration_cast<duration<double>>(t_end - t_start);
     }
-    Result queue_enqueue_result = Result("queue", "enqueue", size_of_queue, time_span.count(), number_of_repeats);
+    ResultByRow queue_enqueue_result = ResultByRow("queue", "enqueue", size_of_queue, time_span.count());
     results_parser.push_back(queue_enqueue_result.toString());
 }
 
-void queue_dequeue_operation(int size_of_queue, int number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
-    using namespace std::chrono;
+void queue_dequeue_operation(int size_of_queue, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
     duration<double> time_span = duration<double>(0);
@@ -150,67 +146,8 @@ void queue_dequeue_operation(int size_of_queue, int number_of_repeats,vector<int
         t_end = high_resolution_clock::now();
         time_span += duration_cast<duration<double>>(t_end - t_start);
     }
-    Result queue_dequeue_result = Result("queue", "dequeue", size_of_queue, time_span.count(), number_of_repeats);
+    ResultByRow queue_dequeue_result = ResultByRow("queue", "dequeue", size_of_queue, time_span.count());
     results_parser.push_back(queue_dequeue_result.toString());
 }
-
-void queue_operations(int size_of_queue,vector<int> &data_vector, vector<string> &results_parser) {
-    using namespace std::chrono;
-    //CREATE OPERATION
-    high_resolution_clock::time_point t_start = high_resolution_clock::now();
-    Queue *test_queue = createQueue(size_of_queue);
-    for (int i = 0; i < size_of_queue; i++) {
-        enqueue(test_queue, data_vector[i]);
-    }
-    high_resolution_clock::time_point t_end = high_resolution_clock::now();
-    duration<double> time_span = duration_cast<duration<double>>(t_end - t_start);
-    Result queue_create_result = Result("queue", "create", size_of_queue, time_span.count());
-    results_parser.push_back(queue_create_result.toString());
-    //SEARCH OPERATION
-    int random_index = rand() % size_of_queue;
-    int searched_value = data_vector[random_index];
-    t_start = high_resolution_clock::now();
-    Queue *temp_search_queue = createQueue(size_of_queue);
-    int temp_queue_len = 0;
-    bool found = false;
-    for (int i = 0; i < size_of_queue; i++) {
-        if (front(test_queue) == searched_value) {
-            found = true;
-            break;
-        } else {
-            enqueue(temp_search_queue, dequeue(test_queue));
-        }
-        temp_queue_len++;
-    }
-    for (int i = 0; i < temp_queue_len; i++) {
-        enqueue(test_queue, dequeue(temp_search_queue));
-    }
-    if (!found) {
-        cout << " queue search error " << endl;
-    }
-    t_end = high_resolution_clock::now();
-    time_span = duration_cast<duration<double>>(t_end - t_start);
-    Result queue_searched_result = Result("queue", "search", size_of_queue, time_span.count());
-    results_parser.push_back(queue_searched_result.toString());
-    deleteQueue(temp_search_queue);
-    //ADD OPERATION
-    int random_value = rand() % 1000000;
-    t_start = high_resolution_clock::now();
-    enqueue(test_queue, random_value);
-    t_end = high_resolution_clock::now();
-    time_span = duration_cast<duration<double>>(t_end - t_start);
-    Result queue_enqueue_result = Result("queue", "enqueue", size_of_queue, time_span.count());
-    results_parser.push_back(queue_enqueue_result.toString());
-    //DELETE OPERATION
-    t_start = high_resolution_clock::now();
-    dequeue(test_queue);
-    t_end = high_resolution_clock::now();
-    time_span = duration_cast<duration<double>>(t_end - t_start);
-    Result queue_dequeue_result = Result("queue", "dequeue", size_of_queue, time_span.count());
-    results_parser.push_back(queue_dequeue_result.toString());
-    deleteQueue(test_queue);
-
-}
-
 
 #endif //UNTITLED_QUEUEOPERATIONS_H

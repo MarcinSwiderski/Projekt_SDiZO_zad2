@@ -36,9 +36,6 @@ bool List::find(int data) {
     }
     return false;
 }
-bool List::isEmpty() {
-    return this->head == nullptr;
-}
 bool List::remove(int data) {
     node_ptr prevNodePtr = nullptr;
     node_ptr currentNodePtr = head;
@@ -68,16 +65,6 @@ bool List::remove(int data) {
         currentNodePtr = currentNodePtr->nextNode;
     }
     return false;
-}
-void List::emptyList() {
-    node_ptr currentNodePtr;
-    while (this->head != nullptr)
-    {
-        currentNodePtr = this->head;
-        this->head = this->head->nextNode;
-        delete currentNodePtr;
-    }
-    this->sz = 0;
 }
 size_t List::size() {
     return this->sz;
