@@ -95,13 +95,13 @@ int main() {
             for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
                 cout << "stack " << operation << "\n" << " - " << j << " elements ";
                 if (operation == "create") {
-                    stack_create_operation(j, repeatsPerInstance, dataFromCsvVector, results);
+                    stackCreate(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "search") {
-                    stack_search_operation(j, repeatsPerInstance, dataFromCsvVector, results);
+                    stackSearch(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "pop") {
-                    stack_pop_operation(j, repeatsPerInstance, dataFromCsvVector, results);
+                    stackPop(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "push") {
-                    stack_push_operation(j, repeatsPerInstance, dataFromCsvVector, results);
+                    stackPush(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else {
                     cout << endl << "Operation not recognized" << endl;
                 }
@@ -112,13 +112,13 @@ int main() {
             for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
                 cout << "queue " << operation << "\n" << " - " << j << " elements ";
                 if (operation == "create") {
-                    queue_create_operation(j, repeatsPerInstance, dataFromCsvVector, results);
+                    queueCreate(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "search") {
-                    queue_search_operation(j, repeatsPerInstance, dataFromCsvVector, results);
-                } else if (operation == "enqueue") {
-                    queue_enqueue_operation(j, repeatsPerInstance, dataFromCsvVector, results);
-                } else if (operation == "dequeue") {
-                    queue_dequeue_operation(j, repeatsPerInstance, dataFromCsvVector, results);
+                    queueSearch(j, repeatsPerInstance, dataFromCsvVector, results);
+                } else if (operation == "queueForward") {
+                    queueMovForward(j, repeatsPerInstance, dataFromCsvVector, results);
+                } else if (operation == "queueBackwords") {
+                    queueMovBackwords(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else {
                     cout << endl << "Operation not recognized" << endl;
                 }

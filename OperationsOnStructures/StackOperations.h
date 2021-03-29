@@ -7,12 +7,12 @@
 #include "Structures/Stack/Stack.h"
 using namespace std::chrono;
 
-void stack_create_operation(int sizeOfStrucutre, unsigned repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results) {
+void stackCreate(int sizeOfStrucutre, unsigned repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results) {
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
-    for (int repeat = 0; repeat < repeatsPerInstance; repeat++) {
-        Stack test_stack = Stack();
-        for (int i = 0; i < sizeOfStrucutre; i++) {
-            test_stack.push(dataFromCsvVector[i]);
+    for (int i = 0; i < repeatsPerInstance; i++) {
+        Stack testStack = Stack();
+        for (int j = 0; j < sizeOfStrucutre; j++) {
+            testStack.push(dataFromCsvVector[j]);
         }
     }
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
@@ -21,7 +21,7 @@ void stack_create_operation(int sizeOfStrucutre, unsigned repeatsPerInstance, ve
     results.push_back(stackResult.toString());
 }
 
-void stack_search_operation(int size_of_stack, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
+void stackSearch(int size_of_stack, unsigned number_of_repeats, vector<int> &data_vector, vector<string> &results_parser) {
     Stack test_stack = Stack();
     for (int i = 0; i < size_of_stack; i++) {
         test_stack.push(data_vector[i]);
@@ -59,40 +59,40 @@ void stack_search_operation(int size_of_stack, unsigned number_of_repeats,vector
     results_parser.push_back(stackResult.toString());
 }
 
-void stack_push_operation(int size_of_stack, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
+void stackPush(int sizeOfStrucutre, unsigned numberOfRepeats, vector<int> &dataFromCsvVector, vector<string> &results_parser) {
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
     duration<double> time_span = duration<double>(0);
-    for (int repeat = 0; repeat < number_of_repeats; repeat++) {
-        Stack test_stack = Stack();
-        for (int i = 0; i < size_of_stack; i++) {
-            test_stack.push(data_vector[i]);
+    for (int repeat = 0; repeat < numberOfRepeats; repeat++) {
+        Stack testStack = Stack();
+        for (int i = 0; i < sizeOfStrucutre; i++) {
+            testStack.push(dataFromCsvVector[i]);
         }
-        int random_value = rand() % 1000000;
+        int randomValue = rand() % 1000000;
         t_start = high_resolution_clock::now();
-        test_stack.push(random_value);
+        testStack.push(randomValue);
         t_end = high_resolution_clock::now();
         time_span += duration_cast<duration<double>>(t_end - t_start);
     }
-    ResultByRow stackResult = ResultByRow("stack", "push", size_of_stack, time_span.count());
+    ResultByRow stackResult = ResultByRow("stack", "push", sizeOfStrucutre, time_span.count());
     results_parser.push_back(stackResult.toString());
 }
 
-void stack_pop_operation(int size_of_stack, unsigned number_of_repeats,vector<int> &data_vector, vector<string> &results_parser) {
+void stackPop(int sizeOfStrucutre, unsigned numberOfRepeats, vector<int> &dataFromCsvVector, vector<string> &results_parser) {
     high_resolution_clock::time_point t_start = high_resolution_clock::now();
     high_resolution_clock::time_point t_end = high_resolution_clock::now();
     duration<double> time_span = duration<double>(0);
-    for (int repeat = 0; repeat < number_of_repeats; repeat++) {
+    for (int repeat = 0; repeat < numberOfRepeats; repeat++) {
         Stack test_stack = Stack();
-        for (int i = 0; i < size_of_stack; i++) {
-            test_stack.push(data_vector[i]);
+        for (int i = 0; i < sizeOfStrucutre; i++) {
+            test_stack.push(dataFromCsvVector[i]);
         }
         t_start = high_resolution_clock::now();
         test_stack.pop();
         t_end = high_resolution_clock::now();
         time_span += duration_cast<duration<double>>(t_end - t_start);
     }
-    ResultByRow stackResult = ResultByRow("stack", "pop", size_of_stack, time_span.count());
+    ResultByRow stackResult = ResultByRow("stack", "pop", sizeOfStrucutre, time_span.count());
     results_parser.push_back(stackResult.toString());
 }
 #endif //UNTITLED_STACKOPERATIONS_H

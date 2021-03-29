@@ -32,7 +32,7 @@ void arrayPut(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFrom
     int random_value = rand() % 1000000;
     int random_index = rand() % sizeOfStructure;
     arrayTimeStart = high_resolution_clock::now();
-    for(int repeat = 0; repeat < repeatsPerInstance; repeat++){
+    for(int j = 0; j < repeatsPerInstance; j++){
         test_array[random_index] = random_value;
     }
     arrayTimeStop = high_resolution_clock::now();
@@ -42,36 +42,28 @@ void arrayPut(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFrom
 }
 
 void arraySearch(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
-    int *test_array = new int[sizeOfStructure];
+    int *testArray = new int[sizeOfStructure];
     for(int i = 0; i < sizeOfStructure; i++){
-        test_array[i] = dataFromCsvVector[i];
+        testArray[i] = dataFromCsvVector[i];
     }
     srand(time(NULL));
-    int random_index = rand() % sizeOfStructure;
-    int searched_value = dataFromCsvVector[random_index];
-    bool found = false;
     arrayTimeStart = high_resolution_clock::now();
     duration<double> time_span = duration<double>(0);
-    for(int repeat = 0; repeat < repeatsPerInstance; repeat++){
-        int random_index = rand() % sizeOfStructure;
-        int searched_value = dataFromCsvVector[random_index];
+    for(int i = 0; i < repeatsPerInstance; i++){
+        int randomIndex = rand() % sizeOfStructure;
+        int searchedValue = dataFromCsvVector[randomIndex];
         arrayTimeStart = high_resolution_clock::now();
-        for(int i = 0; i < sizeOfStructure; i++){
-            if(test_array[i] == searched_value){
+        for(int j = 0; j < sizeOfStructure; j++){
+            if(testArray[j] == searchedValue){
                 arrayTimeStop = high_resolution_clock::now();
-                found = true;
                 break;
             }
-        }
-        if(!found){
-            cout<<"Array searching error"<<endl;
-            arrayTimeStop = high_resolution_clock::now();
         }
         time_span += duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
     }
     ResultByRow array_search_result = ResultByRow("array", "search", sizeOfStructure, time_span.count());
     results.push_back(array_search_result.toString());
-    delete[] test_array;
+    delete[] testArray;
 }
 
 void arrayDelete(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
