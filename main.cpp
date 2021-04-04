@@ -7,12 +7,11 @@
 #include<string>
 #include<vector>
 #include<chrono>
-#include "Structures/ResultsByRow/ResultsByRow.h"
-#include "OperationsOnStructures/ListOperations.h"
-#include "OperationsOnStructures/ArraysOperations.h"
-#include "OperationsOnStructures/QueueOperations.h"
-#include "OperationsOnStructures/StackOperations.h"
-#include "StreamsHandling.h"
+#include "OperationsOnStructures/List/ListOperations.h"
+#include "OperationsOnStructures/Array/ArraysOperations.h"
+#include "OperationsOnStructures/Queue/QueueOperations.h"
+#include "OperationsOnStructures/Stack/StackOperations.h"
+#include "StreamHandliing/Streams.h"
 
 using namespace std;
 vector<int> dataFromCsvVector;
@@ -21,15 +20,15 @@ vector<vector<string>> registers;
 string dataCsvName = "";
 const int dataCsvRegisters = 10000000;
 string resultCsvName = "";
-unsigned repeatsPerInstance = 100;
-unsigned differenceInElementsPerInstance = 100;
+unsigned repeatsPerInstance = 30;
+unsigned differenceInElementsPerInstance = 50000;
 
 bool config() {
-    cout << "Config" << endl;
+    cout << "config" << endl;
     ifstream fin;
     fin.open("config.ini", ios::in);
     if (fin.fail()) {
-        cout << "Config.ini not found" << endl;
+        cout << "file not found";
         return false;
     }
     vector<string> row;
@@ -38,7 +37,7 @@ bool config() {
     fin >> resultCsvName;
     while (!fin.eof()) {
         string structure, operation, maxElementsInMaxInstance;
-        fin >> structure >> operation >> maxElementsInMaxInstance ;
+        fin >> structure >> operation >> maxElementsInMaxInstance;
         vector<string> task;
         task.push_back(structure);
         task.push_back(operation);
@@ -57,7 +56,7 @@ int main() {
         int maxElementsInMaxInstance = stoi(registers[i][2]);
         if (registers[i][0] == "array") {
             for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
-                cout << "array " << operation << "\n" << " - " << j << " elements ";
+                cout << "array-" << operation <<" "<< j << " ";
                 if (operation == "create") {
                     arrayCreate(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "search") {
@@ -69,14 +68,14 @@ int main() {
                 } else if (operation == "add") {
                     arrayAdd(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else {
-                    cout << endl << "This option does not exist" << endl;
+                    cout << endl << "Not found" << endl;
                 }
-                cout << "IN PROGRESS" << endl;
+                cout << "- IN PROGRESS..." << endl;
             }
             cout << "Task done" << endl;
         } else if (registers[i][0] == "list") {
             for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
-                cout << "list " << operation << "\n" << " - " << j << " elements ";
+                cout << "list-" << operation <<" "<< j << " ";
                 if (operation == "create") {
                     listCreate(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "search") {
@@ -86,14 +85,14 @@ int main() {
                 } else if (operation == "add") {
                     listAdd(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else {
-                    cout << endl << "Operation not recognized" << endl;
+                    cout << endl << "Not Found" << endl;
                 }
-                cout << "done" << endl;
+                cout << "- IN PROGRESS..." << endl;
             }
-            cout << "Task done" << endl;
+            cout << "Done" << endl;
         } else if (registers[i][0] == "stack") {
             for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
-                cout << "stack " << operation << "\n" << " - " << j << " elements ";
+                cout << "stock-" << operation <<" "<< j << " ";
                 if (operation == "create") {
                     stackCreate(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "search") {
@@ -103,28 +102,28 @@ int main() {
                 } else if (operation == "push") {
                     stackPush(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else {
-                    cout << endl << "Operation not recognized" << endl;
+                    cout << endl <<  "Not found" << endl;
                 }
-                cout << "done" << endl;
+                cout << "- IN PROGRESS..." << endl;
             }
-            cout << "Task done" << endl;
+            cout << "Done" << endl;
         } else if (registers[i][0] == "queue") {
             for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
-                cout << "queue " << operation << "\n" << " - " << j << " elements ";
+                cout << "queue-" << operation <<" "<< j << " ";
                 if (operation == "create") {
                     queueCreate(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else if (operation == "search") {
                     queueSearch(j, repeatsPerInstance, dataFromCsvVector, results);
-                } else if (operation == "queueForward") {
+                } else if (operation == "forward") {
                     queueMovForward(j, repeatsPerInstance, dataFromCsvVector, results);
-                } else if (operation == "queueBackwords") {
+                } else if (operation == "backwords") {
                     queueMovBackwords(j, repeatsPerInstance, dataFromCsvVector, results);
                 } else {
-                    cout << endl << "Operation not recognized" << endl;
+                    cout << endl << "Not found" << endl;
                 }
-                cout << "done" << endl;
+                cout << "- IN PROGRESS..." << endl;
             }
-            cout << "Task done" << endl;
+            cout << "Done" << endl;
         }
     }
     saveResultsByRow(resultCsvName, results);

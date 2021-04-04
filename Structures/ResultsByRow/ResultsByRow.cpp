@@ -5,13 +5,13 @@
 #include <string>
 #include "ResultsByRow.h"
 
-
-ResultByRow::ResultByRow(string structure, string operation, int size_of_strucutre, double timeSpentOnInstance){
-this->structure = structure;
-this->operation = operation;
-this->size_of_strucutre = size_of_strucutre;
-this->timeSpentOnInstance = timeSpentOnInstance;
+ResultByRow::ResultByRow(string structure, string operation, int sizeOfStructure, double timeSpentOnInstance) {
+    this->structure = structure;
+    this->operation = operation;
+    this->sizeOfStrucutre = sizeOfStructure;
+    this->timeSpentOnInstance = timeSpentOnInstance;
 }
-string ResultByRow::toString(){
-    return(structure+","+operation+","+to_string(size_of_strucutre)+","+to_string(timeSpentOnInstance));
+
+string ResultByRow::toString() {
+    return (structure + "," + operation + "," + to_string(sizeOfStrucutre) + "," + to_string(timeSpentOnInstance));
 }

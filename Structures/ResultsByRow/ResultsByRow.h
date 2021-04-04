@@ -4,15 +4,15 @@
 
 #ifndef UNTITLED_RESULTSBYROW_H
 #define UNTITLED_RESULTSBYROW_H
-
 using namespace std;
+
 
 struct ResultByRow {
     string structure;
     string operation;
-    int size_of_strucutre;
+    int sizeOfStrucutre;
     double timeSpentOnInstance;
-    ResultByRow(string data_structure, string operation, int size_of_strucutre, double time_span);
+    ResultByRow(string data_structure, string operation, int sizeOfStructure, double time_span);
     string toString();
 };
 

@@ -50,6 +50,8 @@ public:
     size_t size();
 
     ~List();
+
+    std::chrono::duration<double> removeGetTime(int data);
 };
 
 

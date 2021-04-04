@@ -1,17 +1,18 @@
 //
-// Created by Marcin on 22.03.2021.
+// Created by Marcin on 04.04.2021.
 //
-
-#ifndef UNTITLED_ARRAYSOPERATIONS_H
-#define UNTITLED_ARRAYSOPERATIONS_H
-
+#include "ArraysOperations.h"
+#include<vector>
+#include <chrono>
+#include "../../Structures/ResultsByRow/ResultsByRow.h"
 using namespace std::chrono;
+using namespace std;
 high_resolution_clock::time_point arrayTimeStart;
 high_resolution_clock::time_point arrayTimeStop;
 
-void arrayCreate(int sizeOfStructure, int numberOfRepeats, vector<int> &dataFromCsvVector, vector<string> &results){
+void arrayCreate(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
     arrayTimeStart = high_resolution_clock::now();
-    for(int i = 0; i < numberOfRepeats; i++){
+    for(int i = 0; i < repeatsPerInstance; i++){
         int *testArray = new int[sizeOfStructure];
         for(int j = 0; j < sizeOfStructure; j++){
             testArray[j] = dataFromCsvVector[j];
@@ -20,10 +21,9 @@ void arrayCreate(int sizeOfStructure, int numberOfRepeats, vector<int> &dataFrom
     }
     arrayTimeStop = high_resolution_clock::now();
     duration<double> finalDuration = duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
-    ResultByRow result = ResultByRow("array", "create", sizeOfStructure, finalDuration.count());
-    results.push_back(result.toString());
+    ResultByRow arrayResult = ResultByRow("array", "create", sizeOfStructure, finalDuration.count());
+    results.push_back(arrayResult.toString());
 }
-
 void arrayPut(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
     int *testArray = new int[sizeOfStructure];
     for(int i = 0; i < sizeOfStructure; i++){
@@ -37,21 +37,18 @@ void arrayPut(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFrom
     }
     arrayTimeStop = high_resolution_clock::now();
     duration<double> finalDuration = duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
-    ResultByRow result = ResultByRow("array", "put", sizeOfStructure, finalDuration.count());
-    results.push_back(result.toString());
+    ResultByRow arrayResult = ResultByRow("array", "put", sizeOfStructure, finalDuration.count());
+    results.push_back(arrayResult.toString());
 }
-
 void arraySearch(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
     int *testArray = new int[sizeOfStructure];
     for(int i = 0; i < sizeOfStructure; i++){
         testArray[i] = dataFromCsvVector[i];
     }
     srand(time(NULL));
-    arrayTimeStart = high_resolution_clock::now();
     duration<double> finalDuration = duration<double>(0);
     for(int i = 0; i < repeatsPerInstance; i++){
-        int randomIndex = rand() % sizeOfStructure;
-        int searchedValue = dataFromCsvVector[randomIndex];
+        int searchedValue = dataFromCsvVector[sizeOfStructure - 1];
         arrayTimeStart = high_resolution_clock::now();
         for(int j = 0; j < sizeOfStructure; j++){
             if(testArray[j] == searchedValue){
@@ -61,38 +58,36 @@ void arraySearch(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataF
         }
         finalDuration += duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
     }
-    ResultByRow result = ResultByRow("array", "search", sizeOfStructure, finalDuration.count());
-    results.push_back(result.toString());
+    ResultByRow arrayResult = ResultByRow("array", "search", sizeOfStructure, finalDuration.count());
+    results.push_back(arrayResult.toString());
     delete[] testArray;
 }
-
 void arrayDelete(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
-    duration<double> time_span = duration<double>(0);
+    duration<double> finalDuration = duration<double>(0);
     for(int i = 0; i < repeatsPerInstance; i++){
         int *testArray = new int[sizeOfStructure];
         for(int j = 0; j < sizeOfStructure; j++){
             testArray[j] = dataFromCsvVector[j];
         }
         arrayTimeStart = high_resolution_clock::now();
-        size_t temp_delete_array_size = sizeOfStructure - 1;
-        int *temp_delete_array = new int[temp_delete_array_size];
-        memcpy(temp_delete_array, testArray, temp_delete_array_size * sizeof(int));
+        size_t tempSize = sizeOfStructure - 1;
+        int *tempArray = new int[tempSize];
+        memcpy(tempArray, testArray, tempSize * sizeof(int));
         delete[] testArray;
-        testArray = temp_delete_array;
+        testArray = tempArray;
         arrayTimeStop = high_resolution_clock::now();
-        time_span += duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
-        delete[] temp_delete_array;
+        finalDuration += duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
+        delete[] tempArray;
     }
-    ResultByRow array_delete_result = ResultByRow("array", "delete", sizeOfStructure, time_span.count());
-    results.push_back(array_delete_result.toString());
+    ResultByRow arrayResult = ResultByRow("array", "delete", sizeOfStructure, finalDuration.count());
+    results.push_back(arrayResult.toString());
 }
-
-void arrayAdd(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results_parser){
-    duration<double> time_span = duration<double>(0);
-    for(int repeat = 0; repeat < repeatsPerInstance; repeat++){
+void arrayAdd(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFromCsvVector, vector<string> &results){
+    duration<double> finalDuration = duration<double>(0);
+    for(int i = 0; i < repeatsPerInstance; i++){
         int *test_array = new int[sizeOfStructure];
-        for(int i = 0; i < sizeOfStructure; i++){
-            test_array[i] = dataFromCsvVector[i];
+        for(int j = 0; j < sizeOfStructure; j++){
+            test_array[j] = dataFromCsvVector[j];
         }
         int random_value = rand() % 1000000;
         arrayTimeStart = high_resolution_clock::now();
@@ -103,11 +98,9 @@ void arrayAdd(int sizeOfStructure, int repeatsPerInstance, vector<int> &dataFrom
         delete[] test_array;
         test_array = temp_add_array;
         arrayTimeStop = high_resolution_clock::now();
-        time_span += duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
+        finalDuration += duration_cast<duration<double>>(arrayTimeStop - arrayTimeStart);
         delete[] temp_add_array;
     }
-    ResultByRow array_add_result = ResultByRow("array", "add", sizeOfStructure, time_span.count());
-    results_parser.push_back(array_add_result.toString());
+    ResultByRow arrayResult = ResultByRow("array", "add", sizeOfStructure, finalDuration.count());
+    results.push_back(arrayResult.toString());
 }
-
-#endif //UNTITLED_ARRAYSOPERATIONS_H
