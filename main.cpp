@@ -7,7 +7,7 @@
 #include<string>
 #include<vector>
 #include<chrono>
-#include "OperationsOnStructures/List/SortOperations.h"
+#include "OperationsOnStructures/Trees/SortOperations.h"
 #include "StreamHandliing/Streams.h"
 
 using namespace std;
