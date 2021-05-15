@@ -8,11 +8,10 @@ using namespace std;
 
 
 struct ResultByRow {
-    string structure;
-    string operation;
+    string typeOfSort;
     int sizeOfStrucutre;
     double timeSpentOnInstance;
-    ResultByRow(string data_structure, string operation, int sizeOfStructure, double time_span);
+    ResultByRow(string typeOfSort, int sizeOfStructure, double time_span);
     string toString();
 };
 

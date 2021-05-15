@@ -32,7 +32,7 @@ bool loadDataFromDataCSV(string resultCsvName, int dataCsvRegisters, vector<int>
 void saveResultsByRow(string resultCsvName, vector<string> &results) {
     fstream fstream1;
     fstream1.open(resultCsvName, ios::out);
-    fstream1 << "structure,operationOnStructure,maxElementsInMaxInstance,timeOfOperation" << endl;
+    fstream1 << "typeOfSort,maxElementsInMaxInstance,timeOfOperation" << endl;
     for (int i = 0; i < results.size(); i++) {
         fstream1 << results[i] << endl;
     }
