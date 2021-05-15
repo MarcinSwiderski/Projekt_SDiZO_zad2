@@ -7,7 +7,7 @@
 #include<string>
 #include<vector>
 #include<chrono>
-#include "OperationsOnStructures/Trees/SortOperations.h"
+#include "OperationsOnStructures/OperationsOnTrees/SortOperations.h"
 #include "StreamHandliing/Streams.h"
 
 using namespace std;
@@ -50,27 +50,27 @@ int main() {
         int maxElementsInMaxInstance = stoi(registers[i][1]);
         for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
             if (structure == "bubbleSort") {
-                bubbleSortTimeMessure(j, dataFromCsvVector, results);
+//                binaryTreeInsertTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             } else if (structure == "coctailSort") {
-                coctailSort(j, dataFromCsvVector, results);
+//                coctailSort(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             } else if (structure == "quickSort") {
-                quickSortTimeMesureing(j, dataFromCsvVector, results);
+//                avlTreeInstertTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             } else if (structure == "insertSort") {
-                insertSort(j, dataFromCsvVector, results);
+//                insertSort(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             } else if (structure == "quickSortMEMORY") {
-                quickSortTimeMemoryMesureing(j, dataFromCsvVector, results);
+//                quickSortTimeMemoryMesureing(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             } else if (structure == "bubbleSortMEMORY") {
-                bubbleSortTimeMessureMemory(j, dataFromCsvVector, results);
+//                bubbleSortTimeMessureMemory(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             }else {
