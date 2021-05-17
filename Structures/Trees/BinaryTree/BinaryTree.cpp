@@ -5,10 +5,10 @@
 #include "BinaryTree.h"
 
 BinaryTree::BinaryTree(){
-
+    root = NULL;
 }
 BinaryTree::~BinaryTree(){
-
+    destroy_tree();
 }
 void BinaryTree::insert(int key){
     if(root != NULL){
@@ -19,6 +19,9 @@ void BinaryTree::insert(int key){
         root->left = NULL;
         root->right = NULL;
     }
+}
+void BinaryTree::deleteElement(int key){
+//    deleteNode( root, key);
 }
 node* BinaryTree::search(int key){
     return search(key, root);

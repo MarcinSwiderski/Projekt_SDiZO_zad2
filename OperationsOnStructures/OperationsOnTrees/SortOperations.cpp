@@ -10,7 +10,7 @@
 //high_resolution_clock::time_point sortStop;
 //
 //
-//void binaryTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
+//void binaryTreeCreateTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
 //    duration<double> finalDuration = duration<double>(0);
 //    AvlTree
 //    sortStart = high_resolution_clock::now();
@@ -21,7 +21,7 @@
 //    results.push_back(bubbleSortResult.toString());
 //}
 //
-//void avlTreeInstertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector,vector<string> &results) {
+//void avlTreeCreateTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector,vector<string> &results) {
 //    duration<double> finalDuration = duration<double>(0);
 //    srand(time(NULL));
 //

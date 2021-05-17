@@ -7,8 +7,8 @@
 //#include<vector>
 //#include "../../Structures/ResultsByRow/ResultsByRow.h"
 //
-//void binaryTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results);
+//void binaryTreeCreateTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results);
 //
-//void avlTreeInstertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results);
+//void avlTreeCreateTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results);
 //
 //#endif //UNTITLED_SORTOPERATIONS_H

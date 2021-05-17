@@ -7,8 +7,9 @@
 #include<string>
 #include<vector>
 #include<chrono>
-#include "OperationsOnStructures/OperationsOnTrees/SortOperations.h"
+//#include "OperationsOnStructures/OperationsOnTrees/SortOperations.h"
 #include "StreamHandliing/Streams.h"
+#include "OperationsOnStructures/TreeOperations.h"
 
 using namespace std;
 vector<int> dataFromCsvVector;
@@ -49,28 +50,28 @@ int main() {
         string structure = registers[i][0];
         int maxElementsInMaxInstance = stoi(registers[i][1]);
         for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
-            if (structure == "bubbleSort") {
-//                binaryTreeInsertTimeMeasuring(j, dataFromCsvVector, results);
+            if (structure == "binaryTreeInsert") {
+                binaryTreeCreateTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "coctailSort") {
-//                coctailSort(j, dataFromCsvVector, results);
+            } else if (structure == "avlTreeInstert") {
+                avlTreeCreateTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "quickSort") {
-//                avlTreeInstertTimeMeasuring(j, dataFromCsvVector, results);
+            } else if (structure == "binaryTreeSearch") {
+                binaryTreeSearchTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "insertSort") {
-//                insertSort(j, dataFromCsvVector, results);
+            } else if (structure == "avlTreeSearch") {
+                avlTreeSearchTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "quickSortMEMORY") {
-//                quickSortTimeMemoryMesureing(j, dataFromCsvVector, results);
+            } else if (structure == "binaryTreeDelete") {
+                binaryTreeDeleteTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "bubbleSortMEMORY") {
-//                bubbleSortTimeMessureMemory(j, dataFromCsvVector, results);
+            } else if (structure == "avlTreeDelete") {
+                avlTreeDeleteTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             }else {
