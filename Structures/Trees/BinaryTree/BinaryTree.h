@@ -23,7 +23,7 @@ public:
 
     void insert(int key);
 
-    node *search(int key);
+    void search(int key);
 
     void deleteElement(int key);
 
@@ -47,56 +47,69 @@ private:
         return current;
     }
 
-//    struct node* deleteNode(struct node* root, int key)
-//    {
-//        // base case
-//        if (root == NULL)
-//            return root;
-//
-//        // If the value to be deleted is
-//        // smaller than the root's
-//        // value, then it lies in left subtree
-//        if (key < root->value)
-//            root->left = deleteNode(root->left, key);
-//
-//            // If the value to be deleted is
-//            // greater than the root's
-//            // value, then it lies in right subtree
-//        else if (key > root->value)
-//            root->right = deleteNode(root->right, key);
-//
-//            // if value is same as root's value, then This is the node
-//            // to be deleted
-//        else {
-//            // node has no child
-//            if (root->left==nullptr and root->right==nullptr) {
-//                return nullptr;
-//            }
-//            // node with only one child or no child
-//            else if (root->left == nullptr) {
-//                struct node* temp = root->right;
-//                free(root);
-//                return temp;
-//            }
-//            else if (root->right == nullptr) {
-//                struct node* temp = root->left;
-//                free(root);
-//                return temp;
-//            }
-//
-//            // node with two children: Get the inorder successor
-//            // (smallest in the right subtree)
-//            struct node *temp;
-//            temp = minValueNode(root->right);
-//
-//            // Copy the inorder successor's content to this node
-//            root->value = temp->value;
-//
-//            // Delete the inorder successor
-//            root->right = deleteNode(root->right, temp->value);
-//        }
-//        return root;
-//    }
+    node* deleteNode(node* root, int k)
+    {
+        // Base case
+        if (root == NULL)
+            return root;
+
+        // Recursive calls for ancestors of
+        // node to be deleted
+        if (root->value > k) {
+            root->left = deleteNode(root->left, k);
+            return root;
+        }
+        else if (root->value < k) {
+            root->right = deleteNode(root->right, k);
+            return root;
+        }
+
+        // We reach here when root is the node
+        // to be deleted.
+
+        // If one of the children is empty
+        if (root->left == NULL) {
+            node* temp = root->right;
+            delete root;
+            return temp;
+        }
+        else if (root->right == NULL) {
+            node* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+            // If both children exist
+        else {
+
+            node* succParent = root;
+
+            // Find successor
+            node* succ = root->right;
+            while (succ->left != NULL) {
+                succParent = succ;
+                succ = succ->left;
+            }
+
+            // Delete successor.  Since successor
+            // is always left child of its parent
+            // we can safely make successor's right
+            // right child as left of its parent.
+            // If there is no succ, then assign
+            // succ->right to succParent->right
+            if (succParent != root)
+                succParent->left = succ->right;
+            else
+                succParent->right = succ->right;
+
+            // Copy Successor Data to root
+            root->value = succ->value;
+
+            // Delete Successor and return root
+            delete succ;
+            return root;
+        }
+    }
 
     void destroy_tree(node *leaf) {
         if (leaf != NULL) {

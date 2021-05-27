@@ -7,13 +7,24 @@
 AvlTree::AvlTree() {
     root = NULL;
 }
+AvlTree::~AvlTree() {
+
+}
+
+//void AvlTree::destroy(AvlTree *pTree) {
+//    pTree.~AvlTree();
+//}
 
 void AvlTree::insertInAvlTree(int x) {
-    root = insert(x, root);
+    insert(x, root);
 }
 
 void AvlTree::removeFromAvlTree(int x) {
-    root = remove(x, root);
+    remove(x, root);
+}
+
+void AvlTree::searchFromAvlTree(int x) {
+    search(x, root);
 }
 
 void AvlTree::displayAvlTree() {

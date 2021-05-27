@@ -8,7 +8,7 @@ BinaryTree::BinaryTree(){
     root = NULL;
 }
 BinaryTree::~BinaryTree(){
-    destroy_tree();
+
 }
 void BinaryTree::insert(int key){
     if(root != NULL){
@@ -21,10 +21,10 @@ void BinaryTree::insert(int key){
     }
 }
 void BinaryTree::deleteElement(int key){
-//    deleteNode( root, key);
+    deleteNode( root, key);
 }
-node* BinaryTree::search(int key){
-    return search(key, root);
+void BinaryTree::search(int key){
+    search(key, root);
 }
 void BinaryTree::destroy_tree(){
     destroy_tree(root);

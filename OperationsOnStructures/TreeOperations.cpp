@@ -43,6 +43,7 @@ void avlTreeCreateTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVec
     ResultByRow quickSortResult = ResultByRow("avlTreeCreate", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());
 }
+
 void binaryTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
     duration<double> finalDuration = duration<double>(0);
     BinaryTree *binaryTree = new BinaryTree();
@@ -55,7 +56,7 @@ void binaryTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
     sortStop = high_resolution_clock::now();
     delete binaryTree;
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
-    ResultByRow bubbleSortResult = ResultByRow("binaryTreeCreate", sizeOfStructure, finalDuration.count());
+    ResultByRow bubbleSortResult = ResultByRow("binaryTreeInsert", sizeOfStructure, finalDuration.count());
     results.push_back(bubbleSortResult.toString());
 }
 
@@ -68,11 +69,13 @@ void avlTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVec
         avlTree->insertInAvlTree(dataFromCsvVector[i]);
     }
     sortStart = high_resolution_clock::now();
-    avlTree->insertInAvlTree(dataFromCsvVector[i]);
+    for (i = 0; i < 100; i++) {
+        avlTree->insertInAvlTree(dataFromCsvVector[i]);
+    }
     sortStop = high_resolution_clock::now();
     delete avlTree;
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
-    ResultByRow quickSortResult = ResultByRow("avlTreeCreate", sizeOfStructure, finalDuration.count());
+    ResultByRow quickSortResult = ResultByRow("avlTreeInsert", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());
 }
 
@@ -92,7 +95,6 @@ void binaryTreeSearchTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
     results.push_back(bubbleSortResult.toString());
 }
 
-// nie dziala
 void avlTreeSearchTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
     duration<double> finalDuration = duration<double>(0);
     srand(time(NULL));
@@ -102,12 +104,13 @@ void avlTreeSearchTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVec
         avlTree->insertInAvlTree(dataFromCsvVector[i]);
     }
     sortStart = high_resolution_clock::now();
-//    for (int i = 0; i < sizeOfStructure; i++) {
-//        avlTree->ses
-//    }
+    for (int i = 0; i < sizeOfStructure; i++) {
+        avlTree->searchFromAvlTree(dataFromCsvVector[i]);
+    }
+
     sortStop = high_resolution_clock::now();;
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
-    ResultByRow quickSortResult = ResultByRow("avlTreeSearch", sizeOfStructure, finalDuration.count());
+    ResultByRow quickSortResult = ResultByRow("avlTreeSearch_doesntwork", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());
 }
 
@@ -118,9 +121,11 @@ void binaryTreeDeleteTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
     for (i = 0; i < sizeOfStructure; i++) {
         binaryTree->insert(dataFromCsvVector[i]);
     }
+
     sortStart = high_resolution_clock::now();
     binaryTree->deleteElement(dataFromCsvVector[i]);
     sortStop = high_resolution_clock::now();
+
     delete binaryTree;
 
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
@@ -132,16 +137,15 @@ void avlTreeDeleteTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVec
     duration<double> finalDuration = duration<double>(0);
     srand(time(NULL));
     AvlTree *avlTree = new AvlTree();
-    sortStart = high_resolution_clock::now();
     int i;
     for (i = 0; i < sizeOfStructure; i++) {
         avlTree->insertInAvlTree(dataFromCsvVector[i]);
     }
-
+    sortStart = high_resolution_clock::now();
     avlTree->removeFromAvlTree(dataFromCsvVector[i]);
+    sortStop = high_resolution_clock::now();
     delete avlTree;
 
-    sortStop = high_resolution_clock::now();
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
     ResultByRow quickSortResult = ResultByRow("avlTreeDelete", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());

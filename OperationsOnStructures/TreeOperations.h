@@ -19,5 +19,9 @@ void binaryTreeDeleteTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
 
 void avlTreeDeleteTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector,vector<string> &results);
 
+void binaryTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results);
+
+void avlTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results);
+
 
 #endif //UNTITLED_TREEOPERATIONS_H

@@ -104,6 +104,19 @@ private:
             return findMax(t->right);
     }
 
+    node* search(int x, node *t){
+        // Element not found
+        if (t == NULL)
+            return NULL;
+
+            // Searching for element
+        else if (x < t->data)
+            t->left = remove(x, t->left);
+        else if (x > t->data)
+            t->right = remove(x, t->right);
+
+    }
+
     node *remove(int x, node *t) {
         node *temp;
 
@@ -173,10 +186,15 @@ private:
 
 public:
     AvlTree();
+    ~AvlTree();
+
+    void searchFromAvlTree(int x);
 
     void insertInAvlTree(int x);
 
     void removeFromAvlTree(int x);
+
+    void destroy(AvlTree pTree);
 
     void displayAvlTree();
 };

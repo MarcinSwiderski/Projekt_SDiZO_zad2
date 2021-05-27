@@ -50,28 +50,36 @@ int main() {
         string structure = registers[i][0];
         int maxElementsInMaxInstance = stoi(registers[i][1]);
         for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
-            if (structure == "binaryTreeInsert") {
+            if (structure == "binaryTreeCREATE") {
                 binaryTreeCreateTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "avlTreeInstert") {
+            } else if (structure == "avlTreeCREATE") {
                 avlTreeCreateTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "binaryTreeSearch") {
+            } else if (structure == "binaryTreeSEARCH") {
                 binaryTreeSearchTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "avlTreeSearch") {
+            } else if (structure == "avlTreeSEARCH") {
                 avlTreeSearchTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "binaryTreeDelete") {
+            } else if (structure == "binaryTreeDELETE") {
                 binaryTreeDeleteTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
-            } else if (structure == "avlTreeDelete") {
+            } else if (structure == "avlTreeDELETE") {
                 avlTreeDeleteTimeMeasuring(j, dataFromCsvVector, results);
+                saveResultsByRow(resultCsvName, results);
+                cout << endl << "Ended " << structure << " for " << j << " size " << endl;
+            } else if (structure == "binaryTreeINSERT") {
+                binaryTreeInsertTimeMeasuring(j, dataFromCsvVector, results);
+                saveResultsByRow(resultCsvName, results);
+                cout << endl << "Ended " << structure << " for " << j << " size " << endl;
+            } else if (structure == "avlTreeINSERT") {
+                avlTreeInsertTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);
                 cout << endl << "Ended " << structure << " for " << j << " size " << endl;
             }else {
