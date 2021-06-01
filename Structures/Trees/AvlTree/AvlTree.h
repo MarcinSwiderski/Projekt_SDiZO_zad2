@@ -114,18 +114,20 @@ private:
             t->left = remove(x, t->left);
         else if (x > t->data)
             t->right = remove(x, t->right);
+        else
+            return t;
 
     }
 
     node *remove(int x, node *t) {
         node *temp;
 
-        // Element not found
+//        // Element not found
         if (t == NULL)
             return NULL;
-
+else
             // Searching for element
-        else if (x < t->data)
+        if (x < t->data)
             t->left = remove(x, t->left);
         else if (x > t->data)
             t->right = remove(x, t->right);

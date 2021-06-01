@@ -8,7 +8,7 @@ AvlTree::AvlTree() {
     root = NULL;
 }
 AvlTree::~AvlTree() {
-
+    makeEmpty(root);
 }
 
 //void AvlTree::destroy(AvlTree *pTree) {
