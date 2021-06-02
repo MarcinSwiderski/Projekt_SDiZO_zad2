@@ -1,33 +1,39 @@
+////
+//// Created by Marcin on 15.05.2021.
+////
 //
-// Created by Marcin on 15.05.2021.
+//#include "AvlTree.h"
 //
-
-#include "AvlTree.h"
-
-AvlTree::AvlTree() {
-    root = NULL;
-}
-AvlTree::~AvlTree() {
-    makeEmpty(root);
-}
-
-//void AvlTree::destroy(AvlTree *pTree) {
-//    pTree.~AvlTree();
+//AvlTree::AvlTree() {
+//    root = NULL;
+//    temp = NULL;
 //}
-
-void AvlTree::insertInAvlTree(int x) {
-    insert(x, root);
-}
-
-void AvlTree::removeFromAvlTree(int x) {
-    remove(x, root);
-}
-
-void AvlTree::searchFromAvlTree(int x) {
-    search(x, root);
-}
-
-void AvlTree::displayAvlTree() {
-    inorder(root);
-    cout << endl;
-}
+//AvlTree::~AvlTree() {
+//    temp = deleteTree(root);
+//    delete temp;
+//
+//}
+//
+////void AvlTree::destroy(AvlTree *pTree) {
+////    pTree.~AvlTree();
+////}
+//
+//void AvlTree::insertInAvlTree(int x) {
+//    temp = insert(x, root);
+//    free(temp);
+//}
+//
+//void AvlTree::removeFromAvlTree(int x) {
+//    temp = remove(x, root);
+//    free(temp);
+//}
+//
+//void AvlTree::searchFromAvlTree(int x) {
+//    temp = search(x, root);
+//    free(temp);
+//}
+//
+//void AvlTree::displayAvlTree() {
+//    inorder(root);
+//    cout << endl;
+//}

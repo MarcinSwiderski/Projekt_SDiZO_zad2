@@ -49,7 +49,7 @@ int main() {
     for (int i = 0; i < registers.size(); i++) {
         string structure = registers[i][0];
         int maxElementsInMaxInstance = stoi(registers[i][1]);
-        for (int j = 1; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
+        for (int j = 1000; j <= maxElementsInMaxInstance; j += differenceInElementsPerInstance) {
             if (structure == "binaryTreeCREATE") {
                 binaryTreeCreateTimeMeasuring(j, dataFromCsvVector, results);
                 saveResultsByRow(resultCsvName, results);

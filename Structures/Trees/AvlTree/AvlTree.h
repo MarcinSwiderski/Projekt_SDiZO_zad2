@@ -1,204 +1,246 @@
-//
-// Created by Marcin on 15.05.2021.
-//
-
-#ifndef UNTITLED_AVLTREE_H
-#define UNTITLED_AVLTREE_H
-
-
-#include<iostream>
-#include <algorithm>
-
+#include <iostream>
+#include <queue>
+#include <unordered_map>
 using namespace std;
 
-class AvlTree {
-private:
-    struct node {
-        int data;
-        node *left;
-        node *right;
-        int height;
-    };
+struct node {
+    struct node *left;
+    int data;
+    int height;
+    struct node *right;
 
-    node *root;
-
-    void makeEmpty(node *t) {
-        if (t == NULL)
-            return;
-        makeEmpty(t->left);
-        makeEmpty(t->right);
-        delete t;
-    }
-
-    node *insert(int x, node *t) {
-        if (t == NULL) {
-            t = new node;
-            t->data = x;
-            t->height = 0;
-            t->left = t->right = NULL;
-        } else if (x < t->data) {
-            t->left = insert(x, t->left);
-            if (height(t->left) - height(t->right) == 2) {
-                if (x < t->left->data)
-                    t = singleRightRotate(t);
-                else
-                    t = doubleRightRotate(t);
-            }
-        } else if (x > t->data) {
-            t->right = insert(x, t->right);
-            if (height(t->right) - height(t->left) == 2) {
-                if (x > t->right->data)
-                    t = singleLeftRotate(t);
-                else
-                    t = doubleLeftRotate(t);
-            }
-        }
-
-        t->height = max(height(t->left), height(t->right)) + 1;
-        return t;
-    }
-
-    node *singleRightRotate(node *&t) {
-        node *u = t->left;
-        t->left = u->right;
-        u->right = t;
-        t->height = max(height(t->left), height(t->right)) + 1;
-        u->height = max(height(u->left), t->height) + 1;
-        return u;
-    }
-
-    node *singleLeftRotate(node *&t) {
-        node *u = t->right;
-        t->right = u->left;
-        u->left = t;
-        t->height = max(height(t->left), height(t->right)) + 1;
-        u->height = max(height(t->right), t->height) + 1;
-        return u;
-    }
-
-    node *doubleLeftRotate(node *&t) {
-        t->right = singleRightRotate(t->right);
-        return singleLeftRotate(t);
-    }
-
-    node *doubleRightRotate(node *&t) {
-        t->left = singleLeftRotate(t->left);
-        return singleRightRotate(t);
-    }
-
-    node *findMin(node *t) {
-        if (t == NULL)
-            return NULL;
-        else if (t->left == NULL)
-            return t;
-        else
-            return findMin(t->left);
-    }
-
-    node *findMax(node *t) {
-        if (t == NULL)
-            return NULL;
-        else if (t->right == NULL)
-            return t;
-        else
-            return findMax(t->right);
-    }
-
-    node* search(int x, node *t){
-        // Element not found
-        if (t == NULL)
-            return NULL;
-
-            // Searching for element
-        else if (x < t->data)
-            t->left = remove(x, t->left);
-        else if (x > t->data)
-            t->right = remove(x, t->right);
-        else
-            return t;
-
-    }
-
-    node *remove(int x, node *t) {
-        node *temp;
-
-//        // Element not found
-        if (t == NULL)
-            return NULL;
-else
-            // Searching for element
-        if (x < t->data)
-            t->left = remove(x, t->left);
-        else if (x > t->data)
-            t->right = remove(x, t->right);
-
-            // Element found
-            // With 2 children
-        else if (t->left && t->right) {
-            temp = findMin(t->right);
-            t->data = temp->data;
-            t->right = remove(t->data, t->right);
-        }
-            // With one or zero child
-        else {
-            temp = t;
-            if (t->left == NULL)
-                t = t->right;
-            else if (t->right == NULL)
-                t = t->left;
-            delete temp;
-        }
-        if (t == NULL)
-            return t;
-
-        t->height = max(height(t->left), height(t->right)) + 1;
-
-        if (height(t->left) - height(t->right) == 2) {
-            if (height(t->left->left) - height(t->left->right) == 1)
-                return singleLeftRotate(t);
-            else
-                return doubleLeftRotate(t);
-        } else if (height(t->right) - height(t->left) == 2) {
-            if (height(t->right->right) - height(t->right->left) == 1)
-                return singleRightRotate(t);
-            else
-                return doubleRightRotate(t);
-        }
-        return t;
-    }
-
-    int height(node *t) {
-        return (t == NULL ? -1 : t->height);
-    }
-
-    int getBalance(node *t) {
-        if (t == NULL)
-            return 0;
-        else
-            return height(t->left) - height(t->right);
-    }
-
-    void inorder(node *t) {
-        if (t == NULL)
-            return;
-        inorder(t->left);
-        cout << t->data << " ";
-        inorder(t->right);
-    }
-
-public:
-    AvlTree();
-    ~AvlTree();
-
-    void searchFromAvlTree(int x);
-
-    void insertInAvlTree(int x);
-
-    void removeFromAvlTree(int x);
-
-    void destroy(AvlTree pTree);
-
-    void displayAvlTree();
 };
 
-#endif //UNTITLED_AVLTREE_H
+class AVL
+{
+private:
+    struct node * root;
+
+    int calheight(struct node *p){
+
+        if(p->left && p->right){
+            if (p->left->height < p->right->height)
+                return p->right->height + 1;
+            else return  p->left->height + 1;
+        }
+        else if(p->left && p->right == NULL){
+            return p->left->height + 1;
+        }
+        else if(p->left ==NULL && p->right){
+            return p->right->height + 1;
+        }
+        return 0;
+
+    }
+
+    int bf(struct node *n){
+        if(n->left && n->right){
+            return n->left->height - n->right->height;
+        }
+        else if(n->left && n->right == NULL){
+            return n->left->height;
+        }
+        else if(n->left== NULL && n->right ){
+            return -n->right->height;
+        }
+    }
+
+    struct node * llrotation(struct node *n){
+        struct node *p;
+        struct node *tp;
+        p = n;
+        tp = p->left;
+
+        p->left = tp->right;
+        tp->right = p;
+
+        return tp;
+    }
+
+
+    struct node * rrrotation(struct node *n){
+        struct node *p;
+        struct node *tp;
+        p = n;
+        tp = p->right;
+
+        p->right = tp->left;
+        tp->left = p;
+
+        return tp;
+    }
+
+
+    struct node * rlrotation(struct node *n){
+        struct node *p;
+        struct node *tp;
+        struct node *tp2;
+        p = n;
+        tp = p->right;
+        tp2 =p->right->left;
+
+        p -> right = tp2->left;
+        tp ->left = tp2->right;
+        tp2 ->left = p;
+        tp2->right = tp;
+
+        return tp2;
+    }
+
+    struct node * lrrotation(struct node *n){
+        struct node *p;
+        struct node *tp;
+        struct node *tp2;
+        p = n;
+        tp = p->left;
+        tp2 =p->left->right;
+
+        p -> left = tp2->right;
+        tp ->right = tp2->left;
+        tp2 ->right = p;
+        tp2->left = tp;
+
+        return tp2;
+    }
+
+    struct node* insert(struct node *r,int data){
+
+        if(r==NULL){
+            struct node *n;
+            n = new struct node;
+            n->data = data;
+            r = n;
+            r->left = r->right = NULL;
+            r->height = 1;
+            return r;
+        }
+        else{
+            if(data < r->data)
+                r->left = insert(r->left,data);
+            else
+                r->right = insert(r->right,data);
+        }
+
+        r->height = calheight(r);
+
+        if(bf(r)==2 && bf(r->left)==1){
+            r = llrotation(r);
+        }
+        else if(bf(r)==-2 && bf(r->right)==-1){
+            r = rrrotation(r);
+        }
+        else if(bf(r)==-2 && bf(r->right)==1){
+            r = rlrotation(r);
+        }
+        else if(bf(r)==2 && bf(r->left)==-1){
+            r = lrrotation(r);
+        }
+
+        return r;
+
+    }
+
+    void levelorder_newline(){
+        if (this->root == NULL){
+            cout<<"\n"<<"Empty tree"<<"\n";
+            return;
+        }
+        levelorder_newline(this->root);
+    }
+
+    void levelorder_newline(struct node *v){
+        queue <struct node *> q;
+        struct node *cur;
+        q.push(v);
+        q.push(NULL);
+
+        while(!q.empty()){
+            cur = q.front();
+            q.pop();
+            if(cur == NULL && q.size()!=0){
+                cout<<"\n";
+
+                q.push(NULL);
+                continue;
+            }
+            if(cur!=NULL){
+                cout<<" "<<cur->data;
+
+                if (cur->left!=NULL){
+                    q.push(cur->left);
+                }
+                if (cur->right!=NULL){
+                    q.push(cur->right);
+                }
+            }
+
+
+        }
+    }
+
+    struct node * deleteNode(struct node *p,int data){
+
+        if(p->left == NULL && p->right == NULL){
+            if(p==this->root)
+                this->root = NULL;
+            delete p;
+            return NULL;
+        }
+
+        struct node *t;
+        struct node *q;
+        if(p->data < data){
+            p->right = deleteNode(p->right,data);
+        }
+        else if(p->data > data){
+            p->left = deleteNode(p->left,data);
+        }
+        else{
+            if(p->left != NULL){
+                q = inpre(p->left);
+                p->data = q->data;
+                p->left=deleteNode(p->left,q->data);
+            }
+            else{
+                q = insuc(p->right);
+                p->data = q->data;
+                p->right = deleteNode(p->right,q->data);
+            }
+        }
+
+        if(bf(p)==2 && bf(p->left)==1){ p = llrotation(p); }
+        else if(bf(p)==2 && bf(p->left)==-1){ p = lrrotation(p); }
+        else if(bf(p)==2 && bf(p->left)==0){ p = llrotation(p); }
+        else if(bf(p)==-2 && bf(p->right)==-1){ p = rrrotation(p); }
+        else if(bf(p)==-2 && bf(p->right)==1){ p = rlrotation(p); }
+        else if(bf(p)==-2 && bf(p->right)==0){ p = llrotation(p); }
+
+
+        return p;
+    }
+
+    struct node* inpre(struct node* p){
+        while(p->right!=NULL)
+            p = p->right;
+        return p;
+    }
+
+    struct node* insuc(struct node* p){
+        while(p->left!=NULL)
+            p = p->left;
+
+        return p;
+    }
+public:
+    AVL(){
+        this->root = NULL;
+
+    }
+    void insert(int data){
+        this->root = insert(root, data);
+    }
+
+    ~AVL(){
+
+    }
+};
