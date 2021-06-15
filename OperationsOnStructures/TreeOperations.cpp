@@ -38,8 +38,8 @@ void avlTreeCreateTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVec
     for (int i = 0; i < sizeOfStructure; i++) {
         avlTree->insert(dataFromCsvVector[i]);
     }
-    delete avlTree;
     sortStop = high_resolution_clock::now();
+    delete avlTree;
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
     ResultByRow quickSortResult = ResultByRow("avlTreeCreate", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());
@@ -67,17 +67,18 @@ void binaryTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
 void avlTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
     duration<double> finalDuration = duration<double>(0);
     srand(time(NULL));
-//    AvlTree *avlTree = new AvlTree();
-//    int i = 0;
-//    for (i = 0; i < sizeOfStructure; i++) {
-//        avlTree->insertInAvlTree(dataFromCsvVector[i]);
-//    }
-//    sortStart = high_resolution_clock::now();
-//    for (i = 0; i < 100; i++) {
-//        avlTree->insertInAvlTree(dataFromCsvVector[i]);
-//    }
-//    sortStop = high_resolution_clock::now();
-//    delete avlTree;
+    AVL *avlTree = new AVL();
+    int i = 0;
+    for (i = 0; i < sizeOfStructure; i++) {
+        avlTree->insert(dataFromCsvVector[i]);
+    }
+    sortStart = high_resolution_clock::now();
+    for (int j = 0; j < 100; j++) {
+        avlTree->insert(dataFromCsvVector[i]);
+        i++;
+    }
+    sortStop = high_resolution_clock::now();
+    delete avlTree;
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
     ResultByRow quickSortResult = ResultByRow("avlTreeInsert", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());
@@ -86,8 +87,8 @@ void avlTreeInsertTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVec
 void binaryTreeSearchTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
     duration<double> finalDuration = duration<double>(0);
     BinaryTree *binaryTree = new BinaryTree(3);
-    int i = 1;
-    for (i = 1; i < sizeOfStructure; i++) {
+    int i = 0;
+    for (i = 0; i < sizeOfStructure; i++) {
         binaryTree->insertion(dataFromCsvVector[i]);
     }
     sortStart = high_resolution_clock::now();
@@ -105,18 +106,18 @@ void binaryTreeSearchTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
 void avlTreeSearchTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
     duration<double> finalDuration = duration<double>(0);
     srand(time(NULL));
-//    AvlTree *avlTree = new AvlTree();
-//    int i = 1;
-//    for (i = 1; i < sizeOfStructure; i++) {
-//        avlTree->insertInAvlTree(dataFromCsvVector[i]);
-//    }
-//    sortStart = high_resolution_clock::now();
-//    for (int j = 0; j < 20; j++) {
-//        avlTree->searchFromAvlTree(dataFromCsvVector[i]);
-//        i--;
-//    }
-//    delete avlTree;
-//    sortStop = high_resolution_clock::now();;
+    AVL *avlTree = new AVL();
+    int i = 1;
+    for (i = 1; i < sizeOfStructure; i++) {
+        avlTree->insert(dataFromCsvVector[i]);
+    }
+    sortStart = high_resolution_clock::now();
+    for (int j = 0; j < 20; j++) {
+        avlTree->search(dataFromCsvVector[i]);
+        i--;
+    }
+    delete avlTree;
+    sortStop = high_resolution_clock::now();;
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
     ResultByRow quickSortResult = ResultByRow("avlTreeSearch", sizeOfStructure, finalDuration.count());
     results.push_back(quickSortResult.toString());
@@ -143,15 +144,15 @@ void binaryTreeDeleteTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsv
 void avlTreeDeleteTimeMeasuring(int sizeOfStructure, vector<int> &dataFromCsvVector, vector<string> &results) {
     duration<double> finalDuration = duration<double>(0);
     srand(time(NULL));
-//    AvlTree *avlTree = new AvlTree();
-//    int i;
-//    for (i = 0; i < sizeOfStructure; i++) {
-//        avlTree->insertInAvlTree(dataFromCsvVector[i]);
-//    }
-//    sortStart = high_resolution_clock::now();
-//    avlTree->removeFromAvlTree(dataFromCsvVector[i]);
-//    sortStop = high_resolution_clock::now();
-//    delete avlTree;
+    AVL *avlTree = new AVL();
+    int i;
+    for (i = 0; i < sizeOfStructure; i++) {
+        avlTree->insert(dataFromCsvVector[i]);
+    }
+    sortStart = high_resolution_clock::now();
+    avlTree->remove(dataFromCsvVector[i]);
+    sortStop = high_resolution_clock::now();
+    delete avlTree;
 
     finalDuration = duration_cast<duration<double>>(sortStop - sortStart);
     ResultByRow quickSortResult = ResultByRow("avlTreeDelete", sizeOfStructure, finalDuration.count());

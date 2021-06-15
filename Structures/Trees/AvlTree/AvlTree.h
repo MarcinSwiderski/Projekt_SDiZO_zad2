@@ -1,246 +1,205 @@
 #include <iostream>
-#include <queue>
-#include <unordered_map>
-using namespace std;
+#include <vector>
 
-struct node {
-    struct node *left;
-    int data;
-    int height;
-    struct node *right;
+class AVL {
 
-};
-
-class AVL
-{
-private:
-    struct node * root;
-
-    int calheight(struct node *p){
-
-        if(p->left && p->right){
-            if (p->left->height < p->right->height)
-                return p->right->height + 1;
-            else return  p->left->height + 1;
-        }
-        else if(p->left && p->right == NULL){
-            return p->left->height + 1;
-        }
-        else if(p->left ==NULL && p->right){
-            return p->right->height + 1;
-        }
-        return 0;
-
-    }
-
-    int bf(struct node *n){
-        if(n->left && n->right){
-            return n->left->height - n->right->height;
-        }
-        else if(n->left && n->right == NULL){
-            return n->left->height;
-        }
-        else if(n->left== NULL && n->right ){
-            return -n->right->height;
-        }
-    }
-
-    struct node * llrotation(struct node *n){
-        struct node *p;
-        struct node *tp;
-        p = n;
-        tp = p->left;
-
-        p->left = tp->right;
-        tp->right = p;
-
-        return tp;
-    }
-
-
-    struct node * rrrotation(struct node *n){
-        struct node *p;
-        struct node *tp;
-        p = n;
-        tp = p->right;
-
-        p->right = tp->left;
-        tp->left = p;
-
-        return tp;
-    }
-
-
-    struct node * rlrotation(struct node *n){
-        struct node *p;
-        struct node *tp;
-        struct node *tp2;
-        p = n;
-        tp = p->right;
-        tp2 =p->right->left;
-
-        p -> right = tp2->left;
-        tp ->left = tp2->right;
-        tp2 ->left = p;
-        tp2->right = tp;
-
-        return tp2;
-    }
-
-    struct node * lrrotation(struct node *n){
-        struct node *p;
-        struct node *tp;
-        struct node *tp2;
-        p = n;
-        tp = p->left;
-        tp2 =p->left->right;
-
-        p -> left = tp2->right;
-        tp ->right = tp2->left;
-        tp2 ->right = p;
-        tp2->left = tp;
-
-        return tp2;
-    }
-
-    struct node* insert(struct node *r,int data){
-
-        if(r==NULL){
-            struct node *n;
-            n = new struct node;
-            n->data = data;
-            r = n;
-            r->left = r->right = NULL;
-            r->height = 1;
-            return r;
-        }
-        else{
-            if(data < r->data)
-                r->left = insert(r->left,data);
-            else
-                r->right = insert(r->right,data);
-        }
-
-        r->height = calheight(r);
-
-        if(bf(r)==2 && bf(r->left)==1){
-            r = llrotation(r);
-        }
-        else if(bf(r)==-2 && bf(r->right)==-1){
-            r = rrrotation(r);
-        }
-        else if(bf(r)==-2 && bf(r->right)==1){
-            r = rlrotation(r);
-        }
-        else if(bf(r)==2 && bf(r->left)==-1){
-            r = lrrotation(r);
-        }
-
-        return r;
-
-    }
-
-    void levelorder_newline(){
-        if (this->root == NULL){
-            cout<<"\n"<<"Empty tree"<<"\n";
-            return;
-        }
-        levelorder_newline(this->root);
-    }
-
-    void levelorder_newline(struct node *v){
-        queue <struct node *> q;
-        struct node *cur;
-        q.push(v);
-        q.push(NULL);
-
-        while(!q.empty()){
-            cur = q.front();
-            q.pop();
-            if(cur == NULL && q.size()!=0){
-                cout<<"\n";
-
-                q.push(NULL);
-                continue;
-            }
-            if(cur!=NULL){
-                cout<<" "<<cur->data;
-
-                if (cur->left!=NULL){
-                    q.push(cur->left);
-                }
-                if (cur->right!=NULL){
-                    q.push(cur->right);
-                }
-            }
-
-
-        }
-    }
-
-    struct node * deleteNode(struct node *p,int data){
-
-        if(p->left == NULL && p->right == NULL){
-            if(p==this->root)
-                this->root = NULL;
-            delete p;
-            return NULL;
-        }
-
-        struct node *t;
-        struct node *q;
-        if(p->data < data){
-            p->right = deleteNode(p->right,data);
-        }
-        else if(p->data > data){
-            p->left = deleteNode(p->left,data);
-        }
-        else{
-            if(p->left != NULL){
-                q = inpre(p->left);
-                p->data = q->data;
-                p->left=deleteNode(p->left,q->data);
-            }
-            else{
-                q = insuc(p->right);
-                p->data = q->data;
-                p->right = deleteNode(p->right,q->data);
-            }
-        }
-
-        if(bf(p)==2 && bf(p->left)==1){ p = llrotation(p); }
-        else if(bf(p)==2 && bf(p->left)==-1){ p = lrrotation(p); }
-        else if(bf(p)==2 && bf(p->left)==0){ p = llrotation(p); }
-        else if(bf(p)==-2 && bf(p->right)==-1){ p = rrrotation(p); }
-        else if(bf(p)==-2 && bf(p->right)==1){ p = rlrotation(p); }
-        else if(bf(p)==-2 && bf(p->right)==0){ p = llrotation(p); }
-
-
-        return p;
-    }
-
-    struct node* inpre(struct node* p){
-        while(p->right!=NULL)
-            p = p->right;
-        return p;
-    }
-
-    struct node* insuc(struct node* p){
-        while(p->left!=NULL)
-            p = p->left;
-
-        return p;
-    }
 public:
-    AVL(){
-        this->root = NULL;
+    AVL();
 
-    }
-    void insert(int data){
-        this->root = insert(root, data);
+    ~AVL();
+
+    void insert(int data);
+
+    void remove(int data);
+
+    bool search(int data);
+
+private:
+    struct Node {
+        int value;
+        Node *left;
+        Node *right;
+        int height;
+    };
+
+    Node *root;
+
+    int height(Node *N) {
+        if (N == nullptr)
+            return 0;
+        return N->height;
     }
 
-    ~AVL(){
+    Node *deleteNode(Node *root, int key) {
 
+        if (root == nullptr)
+            return root;
+
+        if (key < root->value)
+            root->left = deleteNode(root->left, key);
+
+        else if (key > root->value)
+            root->right = deleteNode(root->right, key);
+
+        else {
+            if ((root->left == nullptr) ||
+                (root->right == nullptr)) {
+                Node *temp = root->left ?
+                             root->left :
+                             root->right;
+                if (temp == nullptr) {
+                    temp = root;
+                    root = nullptr;
+                } else
+                    *root = *temp;
+                free(temp);
+            } else {
+                Node *temp = minValueNode(root->right);
+                root->value = temp->value;
+                root->right = deleteNode(root->right,
+                                         temp->value);
+            }
+        }
+        if (root == nullptr)
+            return root;
+        root->height = 1 + max(height(root->left),
+                               height(root->right));
+        int balance = getBalance(root);
+
+        if (balance > 1 &&
+            getBalance(root->left) >= 0)
+            return rightRotate(root);
+
+        if (balance > 1 &&
+            getBalance(root->left) < 0) {
+            root->left = leftRotate(root->left);
+            return rightRotate(root);
+        }
+        if (balance < -1 &&
+            getBalance(root->right) <= 0)
+            return leftRotate(root);
+        if (balance < -1 &&
+            getBalance(root->right) > 0) {
+            root->right = rightRotate(root->right);
+            return leftRotate(root);
+        }
+
+        return root;
     }
+
+    Node *leftRotate(Node *x) {
+        Node *y = x->right;
+        Node *T2 = y->left;
+
+        y->left = x;
+        x->right = T2;
+
+        x->height = max(height(x->left),
+                        height(x->right)) + 1;
+        y->height = max(height(y->left),
+                        height(y->right)) + 1;
+
+        return y;
+    }
+
+    int max(int a, int b) {
+        return (a > b) ? a : b;
+    }
+
+    Node *newNode(int key) {
+        Node *node = new Node();
+        node->value = key;
+        node->left = nullptr;
+        node->right = nullptr;
+        node->height = 1;
+
+        return (node);
+    }
+
+    Node *rightRotate(Node *y) {
+        Node *x = y->left;
+        Node *T2 = x->right;
+
+        x->right = y;
+        y->left = T2;
+
+        y->height = max(height(y->left),
+                        height(y->right)) + 1;
+        x->height = max(height(x->left),
+                        height(x->right)) + 1;
+
+        return x;
+    }
+
+    int getBalance(Node *N) {
+        if (N == nullptr)
+            return 0;
+        return height(N->left) - height(N->right);
+    }
+
+    Node *insertNode(Node *node, int key) {
+        if (node == nullptr)
+            return (newNode(key));
+
+        if (key < node->value)
+            node->left = insertNode(node->left, key);
+        else if (key > node->value)
+            node->right = insertNode(node->right, key);
+        else
+            return node;
+
+        node->height = 1 + max(height(node->left),
+                               height(node->right));
+
+        int balance = getBalance(node);
+
+        if (balance > 1 && key < node->left->value)
+            return rightRotate(node);
+
+        if (balance < -1 && key > node->right->value)
+            return leftRotate(node);
+
+        if (balance > 1 && key > node->left->value) {
+            node->left = leftRotate(node->left);
+            return rightRotate(node);
+        }
+
+        if (balance < -1 && key < node->right->value) {
+            node->right = rightRotate(node->right);
+            return leftRotate(node);
+        }
+
+        return node;
+    }
+
+    Node *minValueNode(Node *node) {
+        Node *current = node;
+
+        while (current->left != nullptr)
+            current = current->left;
+
+        return current;
+    }
+
+
+    Node *find(int data, Node *node) {
+        if (node == nullptr)
+            return nullptr;
+        else if (data < node->value)
+            return find(data, node->left);
+        else if (data > node->value)
+            return find(data, node->right);
+        else
+            return node;
+    }
+
+    Node *deleteTree(Node *node) {
+        if (node == nullptr)
+            return nullptr;
+        deleteTree(node->left);
+        deleteTree(node->right);
+        delete node;
+        return nullptr;
+    }
+
 };

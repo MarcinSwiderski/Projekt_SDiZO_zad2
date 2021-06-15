@@ -1,39 +1,31 @@
-////
-//// Created by Marcin on 15.05.2021.
-////
-//
-//#include "AvlTree.h"
-//
-//AvlTree::AvlTree() {
-//    root = NULL;
-//    temp = NULL;
-//}
-//AvlTree::~AvlTree() {
-//    temp = deleteTree(root);
-//    delete temp;
-//
-//}
-//
-////void AvlTree::destroy(AvlTree *pTree) {
-////    pTree.~AvlTree();
-////}
-//
-//void AvlTree::insertInAvlTree(int x) {
-//    temp = insert(x, root);
-//    free(temp);
-//}
-//
-//void AvlTree::removeFromAvlTree(int x) {
-//    temp = remove(x, root);
-//    free(temp);
-//}
-//
-//void AvlTree::searchFromAvlTree(int x) {
-//    temp = search(x, root);
-//    free(temp);
-//}
-//
-//void AvlTree::displayAvlTree() {
-//    inorder(root);
-//    cout << endl;
-//}
+#include "AVLTree.h"
+
+AVL::AVL()
+{
+    root = nullptr;
+}
+
+AVL::~AVL()
+{
+    root = deleteTree(root);
+}
+
+void AVL::insert(int data)
+{
+    root= insertNode(root, data);
+}
+
+void AVL::remove(int data)
+{
+    root=deleteNode(root, data);
+}
+
+bool AVL::search(int data)
+{
+    Node* v = find(data, root);
+
+    if (v == nullptr)
+        return false;
+    else
+        return true;
+}

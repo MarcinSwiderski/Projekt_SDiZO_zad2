@@ -80,14 +80,6 @@ class BST {
         return t;
     }
 
-    void inorder(node *t) {
-        if (t == NULL)
-            return;
-        inorder(t->left);
-        cout << t->data << " ";
-        inorder(t->right);
-    }
-
     node *find(node *t, int x) {
         if (t == NULL)
             return NULL;
@@ -122,11 +114,6 @@ public:
         temp = remove(x, root);
         free(temp);
 
-    }
-
-    void display() {
-        inorder(root);
-        cout << endl;
     }
 
     void search(int x) {

@@ -18,7 +18,7 @@ vector<vector<string>> registers;
 string dataCsvName = "";
 const int dataCsvRegisters = 10000000;
 string resultCsvName = "";
-unsigned differenceInElementsPerInstance = 1000;
+unsigned differenceInElementsPerInstance = 50000;
 
 bool config() {
     cout << "config" << endl;
